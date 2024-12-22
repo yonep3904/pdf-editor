@@ -18,7 +18,7 @@ export function Header(props) {
       <nav>
         <ul className={styles.navList}>
           {navList.map((link, index) => {
-            const isLast = index === navList.length - 1;
+            const isLast = (index === navList.length - 1);
             return (
               <li key={index} className={styles.navItem}>
                 <Link href={link.href}>{link.label}</Link>

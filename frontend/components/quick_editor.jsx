@@ -3,42 +3,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState, forwardRef } from "react";
 import { useDropzone } from "react-dropzone";
-
+import constant from "@/app/const"
 import style from "./quick_editor.module.css";
 
 export const QuickEditor = forwardRef((props, ref) => {
-  const { title, description, fileUpload, textInput, radioInput } = props;
+  const { title, description, fileUpload, textInput, radioInput, apiEndpoint } = props;
 
   const [files, setFiles] = useState([]);
 
-  // const extensionList = Object.values((fileUpload ?? []).accept).flat();
   const schema = yup.object().shape({
-    // files: yup
-    //   .mixed()
-    //   .required("ファイルを選択してください")
-    //   .test(
-    //     "fileCount",
-    //     "アップロードできるファイルは最大5つまでです",
-    //     (value) => value && value.length <= 5
-    //   )
-    //   .test(
-    //     "fileSize",
-    //     `${fileUpload ? "各" : ""}ファイルは最大5MBまでです`,
-    //     (value) =>
-    //       value &&
-    //       Array.from(value).every((file) => file.size <= 5 * 1024 * 1024)
-    //   )
-    //   .test(
-    //     "fileType",
-    //     `拡張子${extensionList.join(", ")}のファイルのみアップロードできます`,
-    //     (value) =>
-    //       value &&
-    //       Array.from(value).every((file) => {
-    //         const fileExtension = file.name.split(".").pop().toLowerCase();
-    //         return extensionList.includes(`.${fileExtension}`);
-    //       })
-    //   ),
-
     ...(textInput
       ? {
           text: yup
@@ -87,10 +60,44 @@ export const QuickEditor = forwardRef((props, ref) => {
     maxFiles: 5,
   });
 
-  const onSubmit = (data) => {
-    alert({ ...data, files });
-    console.log({ ...data, files });
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files[]", file);
+    });
+  
+    // 必要なパラメータを追加
+    if (data.text) {
+      formData.append("text", data.text);
+    }
+    if (data.radio) {
+      formData.append("radio", data.radio);
+    }
+  
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error("API request failed");
+      }
+  
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "output.zip"; // 適切なファイル名に変更
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+  
 
   return (
     <form

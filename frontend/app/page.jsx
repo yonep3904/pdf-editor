@@ -5,7 +5,7 @@ import React, { useRef } from "react";
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
 import { sections } from "./editor_list";
-import { QuickEditorContainer } from "./components/quick_editor_container";
+import { QuickEditorContainer } from "@/components/quick_editor_container";
 import style from "./style.module.css";
 
 const navList = [
@@ -18,7 +18,7 @@ const navList = [
     label: "ホーム",
   },
   {
-    href: "/user/quick",
+    href: "/user",
     label: "編集",
   },
 ];

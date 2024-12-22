@@ -32,11 +32,9 @@ endpoints = [
     Endpoint('/delete', 'Delete PDF pages', process=editors.delete_page,  multiple=False, allowed_extensions=('pdf', ), params={'pages': '_pages'}),
     Endpoint('/extract', 'Extract PDF pages', process=editors.extract_page,  multiple=False, allowed_extensions=('pdf', ), params={'pages': '_pages'}),
     Endpoint('/rotate', 'Rotate PDF pages', process=editors.rotate_page,  multiple=False, allowed_extensions=('pdf', ), params={'angle': 'int'}),
-
     Endpoint('/extract_text', 'Extract text from PDF', process=editors.extract_text,  multiple=False, allowed_extensions=('pdf', )),
     Endpoint('/extract_image', 'Extract images from PDF', process=editors.extract_image,  multiple=False, allowed_extensions=('pdf', )),
     Endpoint('/extract_table', 'Extract tables from PDF', process=editors.extract_table,  multiple=False, allowed_extensions=('pdf', )),
-
     Endpoint('/convert_image', 'Convert PDF to Image', process=editors.pdf_to_image,  multiple=False, allowed_extensions=('pdf', )),
     Endpoint('/convert_docx', 'Convert PDF to Word', process=editors.pdf_to_docx,  multiple=False, allowed_extensions=('pdf', )),
 ]

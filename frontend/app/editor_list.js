@@ -19,7 +19,6 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
-        textInput: pageInput,
         apiEndpoint: "/split",
       },
       {
@@ -112,56 +111,6 @@ export const sections = [
       },
     ],
   },
-  // {
-    // title: "PDFに変換する",
-    // contents: [
-    //   {
-    //     title: "テキスト → PDF",
-    //     description: "テキストファイルからPDFファイルを作成します。",
-    //     fileUpload: {
-    //       accept: { "text/plain": [".txt"] },
-    //       multiple: false,
-    //     },
-    //     apiEndpoint: "/transform/text2pdf",
-      // },
-      // {
-      //   title: "Word → PDF",
-      //   description: "Wordファイル(.docx)からPDFファイルを作成します。",
-      //   fileUpload: {
-      //     accept: {
-      //       "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-      //         [".docx"],
-      //     },
-      //     multiple: false,
-      //   },
-      //   apiEndpoint: "/transform/word2pdf",
-      // },
-      // {
-      //   title: "Excel → PDF",
-      //   description: "Excelファイル(.xlsx)からPDFファイルを作成します。",
-      //   fileUpload: {
-      //     accept: {
-      //       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-      //         [".xlsx"],
-      //     },
-      //     multiple: false,
-      //   },
-      //   apiEndpoint: "/api/v1/transform/excel2pdf",
-      // },
-      // {
-      //   title: "PowerPoint → PDF",
-      //   description: "PowerPointファイル(.pptx)からPDFファイルを作成します。",
-      //   fileUpload: {
-      //     accept: {
-      //       "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-      //         [".pptx"],
-      //     },
-      //     multiple: false,
-      //   },
-      //   apiEndpoint: "/api/v1/transform/ppt2pdf",
-      // },
-  //   ],
-  // },
   {
     title: "PDFから変換する",
     contents: [
