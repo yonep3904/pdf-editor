@@ -4,7 +4,7 @@ import style from "./style.module.css";
 
 const FileInput = ({ fileUpload, files, setFiles, setValue, errors }) => {
   const onDrop = (acceptedFiles) => {
-    setFiles([...files, ...acceptedFiles]);
+    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     setValue("files", [...files, ...acceptedFiles], {
       shouldValidate: true,
     });

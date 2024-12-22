@@ -20,7 +20,7 @@ class Endpoint:
             single_file_args = [arg if i != 0 else arg[0] for i, arg in enumerate(args)]
             out = self.process(*single_file_args, **kwargs)
 
-        if len(out) == 1:
+        if False and len(out) == 1: # TODO: ファイルが1つだけの場合はそのまま返す?
             return out[0]
         else:
             return zip_files(out)

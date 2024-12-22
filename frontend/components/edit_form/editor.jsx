@@ -22,49 +22,46 @@ export const Editor = forwardRef(
       resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data) => {
-      // const formData = new FormData();
-      // // ファイルを追加
-      // files.forEach((file) => {
-      //   formData.append("files[]", file);
-      // });
-      // // パラメータを追加
-      // params.forEach(([param, type]) => {
-      //   formData.append(param, data[param]);
-      // });
+    const onSubmit = async (data) => {
+      console.log("Form data:", data);
+      const formData = new FormData();
+      // ファイルを追加
+      files.forEach((file) => {
+        formData.append("files[]", file);
+      });
+      // パラメータを追加
+      params.forEach(([param, type]) => {
+        formData.append(param, data[param]);
+      });
 
-      // const url = constant.url(apiEndpoint);
-      // alert(url);
-      // try {
-      //   const response = await fetch(url, {
-      //     method: "POST",
-      //     body: formData,
-      //   });
+      const url = constant.url(apiEndpoint);
+      try {
+        const response = await fetch(apiEndpoint, {
+          method: "POST",
+          body: formData,
+        });
 
-      //   if (!response.ok) {
-      //     throw new Error("API request failed");
-      //   } else {
-      //     alert("処理が完了しました");
-      //   }
+        if (!response.ok) {
+          throw new Error("API request failed");
+        }
 
-      //   // const blob = await response.blob();
-      //   // const url = window.URL.createObjectURL(blob);
-      //   // const a = document.createElement("a");
-      //   // a.style.display = "none";
-      //   // a.href = url;
-      //   // a.download = "output.zip"; // 適切なファイル名に変更
-      //   // document.body.appendChild(a);
-      //   // a.click();
-      //   // window.URL.revokeObjectURL(url);
-      // } catch (error) {
-      //   console.error("Error:", error);
-      // }
-      alert("処理が完了しました");
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "output.zip";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     };
-
     return (
       <form
         onSubmit={handleSubmit(onSubmit)}
+        noValidate
         className={style.formContainer}
         ref={ref}
       >

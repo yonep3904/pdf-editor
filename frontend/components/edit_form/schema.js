@@ -32,6 +32,11 @@ function validatePages(input) {
 }
 
 const schema = yup.object().shape({
+  files: yup
+    .array()
+    .min(1, "少なくとも1つのファイルを選択してください")
+    .required("ファイルは必須です"),
+
   pages: yup
     .string()
     .required("ページ番号を入力してください")
