@@ -1,0 +1,63 @@
+.page {
+  display: flex;
+}
+
+.sidebar {
+  position: fixed; /* サイドバーを固定 */
+  top: 90px; /* 上からの距離を0に設定 */
+  left: 0; /* 左からの距離を0に設定 */
+  width: 220px; /* サイドバーの幅 */
+  height: calc(100vh - 70px - 50px); /* ビューポートの高さ全体を使用 */
+  background: #2c8666;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  overflow-y: auto; /* サイドバー内でスクロールを可能にする */
+  z-index: 1000; /* 必要に応じて他の要素より前面に配置 */
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.sidebarSection {
+  margin-bottom: 20px;
+}
+
+.sidebarSection h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.sidebarButton {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  font-size: 18px;
+  background: #2c8666;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #ffffff;
+  border-bottom: #ffffff dotted 1px;
+}
+
+.sidebarButton:hover {
+  background: #458770;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.contentItem {
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

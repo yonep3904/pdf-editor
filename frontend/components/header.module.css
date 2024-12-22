@@ -1,0 +1,73 @@
+/* header.module.css */
+
+/* ヘッダー全体のスタイル */
+.header {
+  display: flex;
+  height: 70px;
+  align-items: center;
+  justify-content: start;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.289);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ロゴのスタイル */
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+/* navList: ナビゲーションリスト全体 */
+.navList {
+  display: flex; /* 子要素を横並びに配置 */
+  align-items: center; /* 垂直方向の中央揃え */
+  list-style: none; /* リストの点を非表示 */
+  margin-left: 30px; /* リストの左側にスペースを確保 */
+  padding: 0;
+}
+
+/* navItem: 各リスト要素 */
+.navItem {
+  display: flex; /* 区切り文字とリンクを横並びに配置 */
+  align-items: center; /* 垂直方向の中央揃え */
+  color: #696969;
+}
+
+/* リンク部分のスタイル */
+.navItem a {
+  text-decoration: none; /* 下線を非表示 */
+  font-weight: bold;
+  transition: color 0.3s ease; /* ホバー時のスムーズな色変更 */
+}
+
+.navItem a:hover {
+  color: #0056b3; /* ホバー時に濃い青に変更 */
+  text-decoration: underline; /* ホバー時に下線を追加 */
+}
+
+/* 区切り文字部分のスタイル */
+.navItem span {
+  margin: 0 10px; /* 区切り文字の左右にスペースを確保 */
+  font-size: 1rem; /* 区切り文字のサイズを調整 */
+  pointer-events: none; /* セパレーターがホバーを受けないようにする */
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header nav ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navitem a {
+    margin: 10px 0;
+  }
+}
