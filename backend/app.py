@@ -29,8 +29,8 @@ Const.log_dir.mkdir(exist_ok=True)
 endpoints = [
     Endpoint('/split', 'Split PDF pages', process=editors.split_page,  multiple=False, allowed_extensions=('pdf', )),
     Endpoint('/marge', 'Marge PDF pages', process=editors.marge_page,  multiple=True, allowed_extensions=('pdf', )),
-    Endpoint('/delete', 'Delete PDF pages', process=editors.delete_page,  multiple=False, allowed_extensions=('pdf', ), params={'pages': 'str'}),
-    Endpoint('/extract', 'Extract PDF pages', process=editors.extract_page,  multiple=False, allowed_extensions=('pdf', ), params={'pages': 'str'}),
+    Endpoint('/delete', 'Delete PDF pages', process=editors.delete_page,  multiple=False, allowed_extensions=('pdf', ), params={'pages': '_pages'}),
+    Endpoint('/extract', 'Extract PDF pages', process=editors.extract_page,  multiple=False, allowed_extensions=('pdf', ), params={'pages': '_pages'}),
     Endpoint('/rotate', 'Rotate PDF pages', process=editors.rotate_page,  multiple=False, allowed_extensions=('pdf', ), params={'angle': 'int'}),
 
     Endpoint('/extract_text', 'Extract text from PDF', process=editors.extract_text,  multiple=False, allowed_extensions=('pdf', )),
@@ -55,16 +55,19 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
                 if key not in request.form:
                     return jsonify({'error': f'Parameter {key} is missing'}), 400
                 
-                # pagesのみ特別な処理
-                if key == 'pages':
-                    args[key] = split(request.form[value], sort=True, unique=True, decriment=True)
-
-                elif value == 'str':
-                    args[key] = request.form[key]
-                elif value == 'int':
-                    args[key] = int(request.form[key])
-                elif value == 'float':
-                    args[key] = float(request.form[key])
+                match value:
+                    case 'str':
+                        args[key] = request.form[key]
+                    case 'int':
+                        args[key] = int(request.form[key])
+                    case 'float':
+                        args[key] = float(request.form[key])
+                    
+                    # pagesのみ特別な処理
+                    case '_pages':
+                        args[key] = split(request.form[key], sort=True, unique=True, decriment=True)
+                    case _:
+                        return jsonify({'error': f'Invalid parameter type {value}'}), 400
                 
             # リクエストにファイルが含まれているかチェック
             if 'files[]' not in request.files:
@@ -106,7 +109,7 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
                 shutil.rmtree(request_temp_dir, ignore_errors=True)
 
     # エンドポイントの名前を動的に設定
-    dynamic_endpoint.__name__ = f'{endpoint.url.lstrip("/").replace("/","_")}_endpoint'
+    dynamic_endpoint.__name__ = f'{endpoint.url.lstrip("/").replace("/", "_")}_endpoint'
     app.add_url_rule(endpoint.url, view_func=dynamic_endpoint, methods=['POST'])
 
 
