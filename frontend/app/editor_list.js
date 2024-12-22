@@ -1,13 +1,4 @@
-import { validatePageString } from "./page_validation";
-
-const pageInput = {
-  validationMessage: "ページ指定の形式が正しくありません",
-  validationFunc: validatePageString,
-  label: "ページの指定",
-  placeholder: "1, 2-4, 6",
-};
-
-export const sections = [
+const editorList = [
   {
     title: "ページの編集",
     contents: [
@@ -19,6 +10,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
+        params: [],
         apiEndpoint: "/split",
       },
       {
@@ -28,18 +20,9 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: true,
         },
+        params: [],
         apiEndpoint: "/marge",
       },
-      // {
-      //   title: "ページの挿入",
-      //   description: "別のPDFのページを挿入します。",
-      //   fileUpload: {
-      //     accept: { "application/pdf": [".pdf"] },
-      //     multiple: true,
-      //   },
-      //   textInput: pageInput,
-      //   apiEndpoint: "/insert",
-      // },
       {
         title: "ページの削除",
         description: "指定したページを削除します。",
@@ -47,7 +30,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
-        textInput: pageInput,
+        params: [["pages", "pages"]],
         apiEndpoint: "/delete",
       },
       {
@@ -57,7 +40,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
-        textInput: pageInput,
+        params: [["pages", "pages"]],
         apiEndpoint: "/extract",
       },
       {
@@ -67,14 +50,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
-        radioInput: {
-          label: "回転する向きを選択",
-          options: [
-            { label: "右に90°", value: 1 },
-            { label: "180°", value: 2 },
-            { label: "左に90°", value: 3 },
-          ],
-        },
+        params: [["pages", "pages"]],
         apiEndpoint: "/rotate",
       },
     ],
@@ -89,6 +65,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
+        params: [],
         apiEndpoint: "/extract_text",
       },
       {
@@ -98,6 +75,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
+        params: [],
         apiEndpoint: "/extract_image",
       },
       {
@@ -107,6 +85,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
+        params: [],
         apiEndpoint: "/extract_table",
       },
     ],
@@ -121,6 +100,7 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
+        params: [],
         apiEndpoint: "/convert_image",
       },
       {
@@ -130,8 +110,11 @@ export const sections = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
+        params: [],
         apiEndpoint: "/convert_docx",
       },
     ],
   },
 ];
+
+export default editorList;

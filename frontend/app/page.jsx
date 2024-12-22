@@ -2,11 +2,10 @@
 
 import React, { useRef } from "react";
 
-import { Header } from "@/components/header";
-import { Sidebar } from "@/components/sidebar";
-import { sections } from "./editor_list";
-import { QuickEditorContainer } from "@/components/quick_editor_container";
-import style from "./style.module.css";
+import Header from "@/components/header";
+import Sidebar from "@/components/sidebar";
+import EditorContainer from "@/components/edit_form/editor_container";
+import editorList from "@/app/editor_list";
 
 const navList = [
   {
@@ -23,37 +22,19 @@ const navList = [
   },
 ];
 
-function QuickPage() {
+function MainPage() {
   // 各セクション内のコンテンツごとに ref を生成
-  const refs = sections.map((section) =>
+  const refList = editorList.map((section) =>
     section.contents.map(() => useRef(null))
   );
-
-  // コンテンツにジャンプする関数
-  const scrollToContent = (sectionIndex, contentIndex) => {
-    const targetRef = refs[sectionIndex][contentIndex];
-    if (targetRef?.current) {
-      targetRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <>
       <Header navList={navList} />
-      <Sidebar sections={sections} refs={refs} />
-      <div className={style.main}>
-        {sections.map((section, sectionIndex) => (
-          <div key={sectionIndex} className={style.editorList}>
-            <h2>{section.title}</h2>
-            <QuickEditorContainer
-              editorList={section.contents}
-              refList={refs[sectionIndex]}
-            />
-          </div>
-        ))}
-      </div>
+      <Sidebar sectionList={editorList} refList={refList} />
+      <EditorContainer sectionList={editorList} refList={refList} />
     </>
   );
 }
 
-export default QuickPage;
+export default MainPage;
