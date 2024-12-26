@@ -1,60 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{api_name}} Documentation</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            color: #333;
-        }
-        .endpoint {
-            margin-bottom: 20px;
-        }
-        .endpoint h2 {
-            margin: 0;
-            color: #007BFF;
-        }
-        .endpoint p {
-            margin: 5px 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+      }
+      h1 {
+        color: #333;
+      }
+      .endpoint {
+        margin-bottom: 20px;
+      }
+      .endpoint h2 {
+        margin: 0;
+        color: #007bff;
+      }
+      .endpoint p {
+        margin: 5px 0;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>{{api_name}} Documentation</h1>
     <p>Below is a list of available API endpoints and their descriptions:</p>
-    
+
     <!-- Existing endpoints list -->
     {% for endpoint in endpoints %}
     <div class="endpoint">
-        <h2>{{ endpoint.url }}</h2>
-        <p><strong>Description:</strong> {{ endpoint.description }}</p>
-        <p><strong>Multiple Files Allowed:</strong> {{ "Yes" if endpoint.multiple else "No" }}</p>
-        <p><strong>Allowed Extensions:</strong> {{ ", ".join(endpoint.allowed_extensions) }}</p>
-        {% if endpoint.params %}
-        <p><strong>Parameters:</strong></p>
-        <ul>
-            {% for param, param_type in endpoint.params.items() %}
-            <li>{{ param }}: {{ param_type }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+      <h2>{{ endpoint.url }}</h2>
+      <p><strong>Description:</strong> {{ endpoint.description }}</p>
+      <p>
+        <strong>Multiple Files Allowed:</strong> {{ "Yes" if endpoint.multiple
+        else "No" }}
+      </p>
+      <p>
+        <strong>Allowed Extensions:</strong> {{ ",
+        ".join(endpoint.allowed_extensions) }}
+      </p>
+      {% if endpoint.params %}
+      <p><strong>Parameters:</strong></p>
+      <ul>
+        {% for param, param_type in endpoint.params.items() %}
+        <li>{{ param }}: {{ param_type }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </div>
     {% endfor %}
 
     <h3>Page Number Specification</h3>
-    <p>If the <code>pages</code> parameter is included, please provide the page numbers in the following format:</p>
+    <p>
+      If the <code>pages</code> parameter is included, please provide the page
+      numbers in the following format:
+    </p>
     <ul>
-        <li><strong>Page numbers start from 1.</strong> For example, the first page is <code>1</code>.</li>
-        <li><strong>To specify multiple pages, separate the numbers with commas.</strong> For example, to select pages 1, 3, and 5, use <code>1, 3, 5</code>.</li>
-        <li><strong>To specify a range of pages, use a hyphen (-).</strong> For example, to select pages 1 to 5, use <code>1-5</code>.</li>
-        <li><strong>Spaces are allowed between numbers and separators.</strong> For example, <code>1, 3  , 5 - 10</code> is valid.</li>
-        <li><strong>The page numbers will be automatically sorted during processing.</strong> Therefore, the order in which you specify the page numbers does not matter. For example, specifying <code>5, 3, 1</code> will automatically be sorted to <code>1, 3, 5</code> during processing.</li>
+      <li>
+        <strong>Page numbers start from 1.</strong> For example, the first page
+        is <code>1</code>.
+      </li>
+      <li>
+        <strong
+          >To specify multiple pages, separate the numbers with commas.</strong
+        >
+        For example, to select pages 1, 3, and 5, use <code>1, 3, 5</code>.
+      </li>
+      <li>
+        <strong>To specify a range of pages, use a hyphen (-).</strong> For
+        example, to select pages 1 to 5, use <code>1-5</code>.
+      </li>
+      <li>
+        <strong>Spaces are allowed between numbers and separators.</strong> For
+        example, <code>1, 3 , 5 - 10</code> is valid.
+      </li>
+      <li>
+        <strong
+          >The page numbers will be automatically sorted during
+          processing.</strong
+        >
+        Therefore, the order in which you specify the page numbers does not
+        matter. For example, specifying <code>5, 3, 1</code> will automatically
+        be sorted to <code>1, 3, 5</code> during processing.
+      </li>
     </ul>
-</body>
+  </body>
 </html>

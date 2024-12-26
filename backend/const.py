@@ -18,7 +18,7 @@ class Const:
     temp_dir: Path = root / 'temp'
     # ログ保存用ディレクトリ
     log_dir: Path = root / 'log'
-    
+
     # ログレベル
     log_level = 'DEBUG'
     # ログフォーマット
@@ -31,4 +31,9 @@ class Const:
 
     # API name
     api_name: str = 'PDF Editor API'
-    
+
+    # GitHubリポジトリ
+    github_name: str = 'yonep3904'
+    github_repo: str = 'pdf-editor'
+    github_link: str = f'https://{github_name}/{github_repo}'
+

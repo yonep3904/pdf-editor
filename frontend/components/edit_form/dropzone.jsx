@@ -10,6 +10,14 @@ const FileInput = ({ fileUpload, files, setFiles, setValue, errors }) => {
     });
   };
 
+  const removeFile = (file) => {
+    const newFiles = files.filter((f) => f !== file);
+    setFiles(newFiles);
+    setValue("files", newFiles, {
+      shouldValidate: true,
+    });
+  };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: fileUpload.accept,
@@ -30,15 +38,15 @@ const FileInput = ({ fileUpload, files, setFiles, setValue, errors }) => {
             : "ファイルをドラッグ＆ドロップするか、クリックして選択してください"}
         </p>
       </div>
-      <div>
-        {errors.files && <p className={style.error}>{errors.files.message}</p>}
-        {files.length > 0 && (
-          <ul className={style.fileList}>
-            {files.map((file, index) => (
-              <li key={index}>{file.name}</li>
-            ))}
-          </ul>
-        )}
+      <div className={style.fileList}>
+        {files.map((file, index) => (
+          <div key={index} className={style.fileItem}>
+            <span>{file.name}</span>
+            <button type="button" onClick={() => removeFile(file)}>
+              削除
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

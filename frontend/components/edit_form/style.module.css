@@ -36,20 +36,6 @@
   margin-left: 20px;
 }
 
-/* ラベルとインプットのスタイル */
-.label {
-  font-size: 1rem;
-  margin-bottom: 8px;
-  color: #333;
-}
-
-/* エラー表示 */
-.error {
-  font-size: 0.875rem;
-  color: #d9534f;
-  margin-top: 4px;
-}
-
 /* ドロップゾーン */
 .dropzoneContainer {
   display: flex;
@@ -85,15 +71,36 @@
 }
 
 .fileList {
-  list-style: none;
-  padding: 0;
-  margin: 8px 0 0 8px;
+  margin-top: 10px;
+  margin-left: 20px;
+  flex-direction: column;
 }
 
-.fileList li {
-  font-size: 0.875rem;
-  color: #333;
-  margin: 4px 0;
+.fileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px;
+  border: none;
+  flex-direction: row; /* 縦に並べる */
+}
+
+.fileItem span {
+  flex-grow: 1;
+}
+
+.fileItem button {
+  background: none;
+  color: #ff4d4d;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.fileItem button:hover {
+  color: #ff1a1a;
 }
 
 /* テキストボックス */
@@ -132,7 +139,7 @@
 }
 
 /* ボタン */
-.formContainer button {
+.submitButton {
   width: 13%;
   height: 80%;
   padding: 12px 16px;
@@ -145,14 +152,29 @@
   transition: background-color 0.3s;
 }
 
-.formContainer button:hover {
+.submitButton:hover {
   background-color: #0056b3;
 }
 
-.formContainer button:last-child:nth-of-type(1) {
+.submitButton:last-child:nth-of-type(1) {
   margin-left: auto; /* 要素が1つの場合、右寄せ */
 }
-.formContainer button:disabled {
+
+.submitButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+/* ラベルとインプットのスタイル */
+.label {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* エラー表示 */
+.error {
+  font-size: 0.875rem;
+  color: #d9534f;
+  margin-top: 4px;
 }
