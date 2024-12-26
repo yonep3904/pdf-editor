@@ -1,0 +1,40 @@
+This project uses the following third-party libraries:
+
+1. **PyMuPDF**
+
+   - License: MIT License
+   - Copyright (c) 2019-2024 MuPDF, Inc.
+
+2. **Pillow**
+
+   - License: PIL Software License (Python Imaging Library)
+   - Copyright (c) 2010-2024 Python Imaging Library Contributors
+
+3. **pandas**
+
+   - License: BSD 3-Clause License
+   - Copyright (c) 2008-2024 The pandas development team
+
+4. **pdf2docx**
+
+   - License: MIT License
+   - Copyright (c) 2020-2024 pdf2docx contributors
+
+5. **Flask**
+
+   - License: BSD 3-Clause License
+   - Copyright (c) 2010-2024 The Flask Authors
+
+6. **Flask-Cors**
+
+   - License: MIT License
+   - Copyright (c) 2018-2024 Flask-Cors contributors
+
+7. **Werkzeug**
+
+   - License: BSD 3-Clause License
+   - Copyright (c) 2007-2024 The Werkzeug Authors
+
+8. **Next.js**
+   - License: MIT License
+   - Copyright (c) 2016-2024 Vercel, Inc.
