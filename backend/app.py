@@ -26,6 +26,10 @@ handler.setFormatter(logging.Formatter(Const.log_format))
 app.logger.addHandler(handler)
 app.logger.setLevel(Const.log_level)
 
+# ルートロガーにもハンドラを追加
+logging.getLogger().addHandler(handler)
+logging.getLogger().setLevel(Const.log_level)
+
 # ディレクトリの作成
 Const.temp_dir.mkdir(exist_ok=True)
 Const.log_dir.mkdir(exist_ok=True)
