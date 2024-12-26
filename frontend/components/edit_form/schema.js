@@ -68,8 +68,6 @@ const createSchema = (fields) => {
             return "2";
           case "左に90°":
             return "3";
-          default:
-            return "0";
         }
       })
       .nullable();
