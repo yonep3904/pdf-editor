@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
@@ -25,16 +25,17 @@ const navList = [
 
 function MainPage() {
   // 各セクション内のコンテンツごとに ref を生成
-  const refList = editorList.map((section) =>
-    section.contents.map(() => useRef(null))
+  const refList = useRef([]);
+  refList.current = editorList.map((section) =>
+    section.contents.map(() => React.createRef(null))
   );
 
   return (
     <>
       <Header navList={navList} />
-      <Sidebar sectionList={editorList} refList={refList} />
-      <EditorContainer sectionList={editorList} refList={refList} />
-      <Footer copyrights={["aaaaa", "aaabaa"]} />
+      <Sidebar sectionList={editorList} refList={refList.current} />
+      <EditorContainer sectionList={editorList} refList={refList.current} />
+      <Footer />
     </>
   );
 }

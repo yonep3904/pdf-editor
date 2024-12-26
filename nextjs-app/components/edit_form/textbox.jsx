@@ -16,3 +16,5 @@ export const PagesInput = forwardRef(({ register, errors }, ref) => (
     {errors.pages && <p className={style.error}>{errors.pages.message}</p>}
   </div>
 ));
+
+PagesInput.displayName = "PagesInput";

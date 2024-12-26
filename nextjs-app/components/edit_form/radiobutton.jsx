@@ -36,3 +36,6 @@ export const FormatInput = forwardRef(({ register, errors }, ref) => (
     {errors.format && <p className={style.error}>{errors.format.message}</p>}
   </div>
 ));
+
+AngleInput.displayName = "AngleInput";
+FormatInput.displayName = "FormatInput";

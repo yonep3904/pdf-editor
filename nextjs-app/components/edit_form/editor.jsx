@@ -4,12 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import constant from "@/app/const";
 import createSchema from "./schema";
-import FileInput from "./dropzone";
+import { FileInput } from "./dropzone";
 import { PagesInput } from "./textbox";
 import { AngleInput, FormatInput } from "./radiobutton";
 import style from "./style.module.css";
 
-export const Editor = forwardRef(
+const Editor = forwardRef(
   ({ title, description, fileUpload, params, apiEndpoint }, ref) => {
     const [files, setFiles] = useState([]);
 
@@ -118,3 +118,6 @@ export const Editor = forwardRef(
     );
   }
 );
+
+Editor.displayName = "Editor";
+export default Editor;

@@ -1,5 +1,4 @@
-import React, { useRef } from "react";
-import { Editor } from "./editor";
+import Editor from "./editor";
 import style from "./editor_contsiner.module.css";
 
 const EditorSectionContainer = ({ editorList, refList }) => (
@@ -11,11 +10,6 @@ const EditorSectionContainer = ({ editorList, refList }) => (
 );
 
 const EditorContainer = ({ sectionList, refList }) => {
-  // 各セクション内のコンテンツごとに ref を生成
-  // const refs = sectionList.map((section) =>
-  //   section.contents.map(() => useRef(null))
-  // );
-
   // コンテンツにジャンプする関数
   const scrollToContent = (sectionIndex, contentIndex) => {
     const targetRef = refs[sectionIndex][contentIndex];

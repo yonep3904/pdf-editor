@@ -2,7 +2,13 @@ import React from "react";
 import { useDropzone } from "react-dropzone";
 import style from "./style.module.css";
 
-const FileInput = ({ fileUpload, files, setFiles, setValue, errors }) => {
+export const FileInput = ({
+  fileUpload,
+  files,
+  setFiles,
+  setValue,
+  errors,
+}) => {
   const onDrop = (acceptedFiles) => {
     setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
     setValue("files", [...files, ...acceptedFiles], {
@@ -52,4 +58,4 @@ const FileInput = ({ fileUpload, files, setFiles, setValue, errors }) => {
   );
 };
 
-export default FileInput;
+FileInput.displayName = "FileInput";
