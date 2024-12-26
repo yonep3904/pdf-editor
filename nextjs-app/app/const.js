@@ -1,10 +1,8 @@
 const constant = {
   api: {
-    host: "127.0.0.1",
-    port: "5000",
-
+    route: "/api",
     url: function (endpoint) {
-      return `http://${this.host}:${this.port}${endpoint}`;
+      return `${this.route}${endpoint}`;
     },
   },
   github: {

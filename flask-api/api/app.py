@@ -61,7 +61,7 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
             for key, value in endpoint.params.items():
                 if key not in request.form:
                     return jsonify({'error': f'Parameter {key} is missing'}), 400
-                
+
                 match value:
                     case 'str':
                         args[key] = request.form[key]
@@ -69,13 +69,13 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
                         args[key] = int(request.form[key])
                     case 'float':
                         args[key] = float(request.form[key])
-                    
+
                     # pagesのみ特別な処理
                     case '_pages':
                         args[key] = split(request.form[key], sort=True, unique=True, decriment=True)
                     case _:
                         return jsonify({'error': f'Invalid parameter type {value}'}), 400
-                
+
             # リクエストにファイルが含まれているかチェック
             if 'files[]' not in request.files:
                 return jsonify({'error': 'No files part in the request'}), 400
@@ -109,7 +109,7 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
             # エラーが発生した場合はログを出力
             app.logger.error(e, exc_info=True)
             return jsonify({'error': str(e)}), 500
-        
+
         finally:
             # 処理が終了したら一時ファイルを削除
             if request_temp_dir.exists():
@@ -117,7 +117,7 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
 
     # エンドポイントの名前を動的に設定
     dynamic_endpoint.__name__ = f'{endpoint.url.lstrip("/").replace("/", "_")}_endpoint'
-    app.add_url_rule(endpoint.url, view_func=dynamic_endpoint, methods=['POST'])
+    app.add_url_rule('/api' + endpoint.url, view_func=dynamic_endpoint, methods=['POST'])
 
 
 if __name__ == '__main__':
