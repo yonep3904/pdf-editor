@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import EditorContainer from "@/components/edit_form/editor_container";
 import editorList from "@/app/editor_list";
+import Footer from "@/components/footer";
 
 const navList = [
   {
@@ -33,6 +34,7 @@ function MainPage() {
       <Header navList={navList} />
       <Sidebar sectionList={editorList} refList={refList} />
       <EditorContainer sectionList={editorList} refList={refList} />
+      <Footer copyrights={["aaaaa", "aaabaa"]} />
     </>
   );
 }

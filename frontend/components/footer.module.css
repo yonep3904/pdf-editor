@@ -1,0 +1,47 @@
+/* フッター全体のスタイル */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e9e6e6; /* 背景色を白に変更 */
+  color: #333; /* テキスト色を暗いグレーに変更 */
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  border-top: 2px solid #ddd; /* 薄いグレーのボーダー */
+}
+
+/* Link内の要素を中央揃えにする */
+.footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  justify-content: center; /* 垂直方向の中央揃え */
+}
+
+/* GitHubロゴのスタイル */
+.logo {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 100px; /* ロゴの幅を少し小さく設定 */
+  height: auto; /* 高さは自動で調整 */
+  transition: transform 0.3s ease;
+}
+
+/* GitHubロゴにホバー時のエフェクト */
+.logo:hover {
+  transform: scale(1.05); /* 少し拡大するエフェクト */
+}
+
+/* GitHubリンクのテキスト */
+.footer a p {
+  margin: 0;
+  font-size: 12px; /* テキストサイズを少し小さく */
+}
+
+/* コピーライトテキスト */
+.footer p {
+  margin: 5px 0;
+}
