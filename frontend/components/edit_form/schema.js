@@ -59,7 +59,19 @@ const createSchema = (fields) => {
     shape.angle = yup
       .string()
       .required("回転方向を選択してください")
-      .oneOf(["右に90°", "180°", "左に90°"], "選択肢から選んでください")
+      .oneOf(["0", "1", "2", "3"], "選択肢から選んでください")
+      .transform((value) => {
+        switch (value) {
+          case "右に90°":
+            return "1";
+          case "180°":
+            return "2";
+          case "左に90°":
+            return "3";
+          default:
+            return "0";
+        }
+      })
       .nullable();
   }
 
