@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Split API with ZIP Response</title>
+  </head>
+  <body>
+    <h1>Upload PDF to Split</h1>
+    <form id="pdfForm">
+      <label for="fileInput">Select a PDF file:</label>
+      <input type="file" id="fileInput" name="file" accept=".pdf" required />
+      <br /><br />
+      <button type="submit">Upload and Split</button>
+    </form>
+    <div
+      id="response"
+      style="margin-top: 20px; padding: 10px; border: 1px solid #ccc"
+    ></div>
+
+    <script>
+      document
+        .getElementById("pdfForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault(); // デフォルトのフォーム送信を防止
+
+          const fileInput = document.getElementById("fileInput");
+          const file = fileInput.files[0];
+          const responseDiv = document.getElementById("response");
+          responseDiv.textContent = "Uploading file...";
+
+          if (!file || !file.name.endsWith(".pdf")) {
+            responseDiv.textContent = "Please select a valid PDF file.";
+            return;
+          }
+
+          const formData = new FormData();
+          formData.append("files[]", file); // 配列形式としてキーを設定
+
+          try {
+            const response = await fetch("http://127.0.0.1:5000/split", {
+              method: "POST",
+              body: formData,
+            });
+
+            if (!response.ok) {
+              throw new Error(`Error: ${response.statusText}`);
+            }
+
+            // ZIPファイルのレスポンスをBlobとして取得
+            const blob = await response.blob();
+
+            // ブラウザでのダウンロード処理
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "split_files.zip"; // 保存するファイル名
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+
+            responseDiv.textContent = "File downloaded successfully.";
+          } catch (error) {
+            responseDiv.textContent = `Error: ${error.message}`;
+          }
+        });
+    </script>
+  </body>
+</html>

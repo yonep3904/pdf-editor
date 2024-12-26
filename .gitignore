@@ -50,4 +50,4 @@ yarn-error.log*
 next-env.d.ts
 
 # testdata
-/test/
+/test/*.pdf

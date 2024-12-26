@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask API Test</title>
+  </head>
+  <body>
+    <h1>Flask API Fetch Test</h1>
+    <button id="fetchButton">Fetch Data from API</button>
+    <div
+      id="result"
+      style="margin-top: 20px; padding: 10px; border: 1px solid #ccc"
+    ></div>
+
+    <script>
+      document
+        .getElementById("fetchButton")
+        .addEventListener("click", async () => {
+          const resultDiv = document.getElementById("result");
+          resultDiv.textContent = "Fetching data...";
+          try {
+            const response = await fetch("http://127.0.0.1:5000");
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.text(); // Assuming API returns plain text
+            resultDiv.textContent = `Response from API: ${data}`;
+          } catch (error) {
+            resultDiv.textContent = `Error: ${error.message}`;
+          }
+        });
+    </script>
+  </body>
+</html>
