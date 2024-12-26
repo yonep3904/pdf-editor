@@ -31,31 +31,47 @@ function validatePages(input) {
   return true; // 全てのチェックを通過
 }
 
-const schema = yup.object().shape({
-  files: yup
-    .array()
-    .min(1, "少なくとも1つのファイルを選択してください")
-    .required("ファイルは必須です"),
+const createSchema = (fields) => {
+  const shape = {};
 
-  pages: yup
-    .string()
-    .required("ページ番号を入力してください")
-    .max(100, "100文字以内で入力してください")
-    .test(
-      "formatValidation",
-      "ページ指定の形式が正しくありません",
-      validatePages
-    ),
+  if (fields.includes("files")) {
+    shape.files = yup
+      .array()
+      .min(1, "少なくとも1つのファイルを選択してください")
+      .required("ファイルは必須です")
+      .nullable();
+  }
 
-  angle: yup
-    .number()
-    .required("回転方向を選択してください")
-    .oneOf(["右に90°", "180°", "左に90°"], "選択肢から選んでください"),
+  if (fields.includes("pages")) {
+    shape.pages = yup
+      .string()
+      .required("ページ番号を入力してください")
+      .max(100, "100文字以内で入力してください")
+      .test(
+        "formatValidation",
+        "ページ指定の形式が正しくありません",
+        validatePages
+      )
+      .nullable();
+  }
 
-  format: yup
-    .number()
-    .required("形式を選択してください")
-    .oneOf([".png", ".jpg", ".bmp", ".tiff"], "選択肢から選んでください"),
-});
+  if (fields.includes("angle")) {
+    shape.angle = yup
+      .string()
+      .required("回転方向を選択してください")
+      .oneOf(["右に90°", "180°", "左に90°"], "選択肢から選んでください")
+      .nullable();
+  }
 
-export default schema;
+  if (fields.includes("format")) {
+    shape.format = yup
+      .string()
+      .required("形式を選択してください")
+      .oneOf([".png", ".jpg", ".bmp", ".tiff"], "選択肢から選んでください")
+      .nullable();
+  }
+
+  return yup.object().shape(shape);
+};
+
+export default createSchema;

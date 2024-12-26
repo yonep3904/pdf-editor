@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import constant from "@/app/const";
-import schema from "./schema";
+import createSchema from "./schema";
 import FileInput from "./dropzone";
 import { PagesInput } from "./textbox";
 import { AngleInput, FormatInput } from "./radiobutton";
@@ -12,6 +12,11 @@ import style from "./style.module.css";
 export const Editor = forwardRef(
   ({ title, description, fileUpload, params, apiEndpoint }, ref) => {
     const [files, setFiles] = useState([]);
+
+    const fields = params.map(([param]) => param);
+    if (fileUpload) fields.push("files");
+
+    const schema = createSchema(fields);
 
     const {
       register,
@@ -34,7 +39,13 @@ export const Editor = forwardRef(
         formData.append(param, data[param]);
       });
 
-      const url = constant.url(apiEndpoint);
+      const url = constant.api.url(apiEndpoint);
+
+      console.log("API URL:", url);
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+
       try {
         const response = await fetch(apiEndpoint, {
           method: "POST",
@@ -58,9 +69,14 @@ export const Editor = forwardRef(
         console.error("Error:", error);
       }
     };
+
+    const onError = (errors) => {
+      console.log("Validation errors:", errors);
+    };
+
     return (
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit, onError)}
         noValidate
         className={style.formContainer}
         ref={ref}
