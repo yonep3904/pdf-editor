@@ -1,8 +1,8 @@
 const constant = {
   api: {
-    route: "/api",
+    baseUrl: process.env.API_BASE_URL,
     url: function (endpoint) {
-      return `${this.route}${endpoint}`;
+      return `${this.baseUrl}${endpoint}`;
     },
   },
   github: {
