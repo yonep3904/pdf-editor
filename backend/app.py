@@ -1,4 +1,5 @@
 from flask import Flask, request, send_file, jsonify, render_template
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import uuid
 import shutil
@@ -11,6 +12,10 @@ from common import split
 import editors
 
 app = Flask(__name__)
+# CORSの設定
+CORS(app)
+# 受け取り可能なファイルサイズを16MBに設定
+# app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # ログハンドラの設定
 handler = RotatingFileHandler(Const.log_dir / 'app.log', maxBytes=10 * 1024 * 1024, backupCount=5)

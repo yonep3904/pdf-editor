@@ -28,7 +28,6 @@ export const Editor = forwardRef(
     });
 
     const onSubmit = async (data) => {
-      console.log("Form data:", data);
       const formData = new FormData();
       // ファイルを追加
       files.forEach((file) => {
@@ -39,18 +38,16 @@ export const Editor = forwardRef(
         formData.append(param, data[param]);
       });
 
-      const url = constant.api.url(apiEndpoint);
-
-      console.log("API URL:", url);
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
+      console.log("API URL:", constant.api.url(apiEndpoint));
+      console.log("Form Data:", formData);
 
       try {
-        const response = await fetch(apiEndpoint, {
+        const response = await fetch(constant.api.url(apiEndpoint), {
           method: "POST",
           body: formData,
         });
+
+        console.log("Response status:", response.status);
 
         if (!response.ok) {
           throw new Error("API request failed");
