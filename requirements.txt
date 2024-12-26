@@ -1,0 +1,7 @@
+PyMuPDF
+Pillow
+pandas
+pdf2docx
+Flask
+Flask-Cors
+Werkzeug
