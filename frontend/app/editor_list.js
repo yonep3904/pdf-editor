@@ -50,7 +50,7 @@ const editorList = [
           accept: { "application/pdf": [".pdf"] },
           multiple: false,
         },
-        params: [["pages", "pages"]],
+        params: [["angle", "angle"]],
         apiEndpoint: "/rotate",
       },
     ],

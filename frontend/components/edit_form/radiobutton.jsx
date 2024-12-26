@@ -10,7 +10,6 @@ export const AngleInput = forwardRef(({ register, errors }, ref) => (
           type="radio"
           value={option}
           {...register("angle")}
-          ref={ref}
           className={style.radioGroup}
         />
         {option}
@@ -29,7 +28,6 @@ export const FormatInput = forwardRef(({ register, errors }, ref) => (
           type="radio"
           value={option}
           {...register("format")}
-          ref={ref}
           className={style.radioGroup}
         />
         {option}

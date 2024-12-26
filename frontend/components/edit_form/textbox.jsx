@@ -11,7 +11,6 @@ export const PagesInput = forwardRef(({ register, errors }, ref) => (
       type="text"
       placeholder="1, 2-4, 5"
       {...register("pages")}
-      ref={ref}
       className={style.input}
     />
     {errors.pages && <p className={style.error}>{errors.pages.message}</p>}

@@ -97,7 +97,7 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
                     return jsonify({'error': f'File {file.filename} is not allowed'}), 400
 
             # 処理を実行
-            processed_files = endpoint(saved_files)
+            processed_files = endpoint(saved_files, **args)
 
             return send_file(processed_files, as_attachment=True)
 

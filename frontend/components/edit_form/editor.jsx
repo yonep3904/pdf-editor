@@ -38,17 +38,16 @@ export const Editor = forwardRef(
         formData.append(param, data[param]);
       });
 
-      console.log("API URL:", constant.api.url(apiEndpoint));
-      console.log("Form Data:", formData);
-
       try {
+        console.log("API URL:", constant.api.url(apiEndpoint));
+        console.log("Form Data:", formData);
+
         const response = await fetch(constant.api.url(apiEndpoint), {
           method: "POST",
           body: formData,
         });
 
         console.log("Response status:", response.status);
-
         if (!response.ok) {
           throw new Error("API request failed");
         }
