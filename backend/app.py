@@ -53,6 +53,68 @@ endpoints = [
 def index_endpoint():
     return render_template('api_docs.html', endpoints=endpoints, api_name=Const.api_name)
 
+@app.route('/split-test', methods=['POST'])
+def split_test():
+    endpoint = endpoints[0]
+    try:
+        args = {}
+        for key, value in endpoint.params.items():
+            if key not in request.form:
+                return jsonify({'error': f'Parameter {key} is missing'}), 400
+
+            match value:
+                case 'str':
+                    args[key] = request.form[key]
+                case 'int':
+                    args[key] = int(request.form[key])
+                case 'float':
+                    args[key] = float(request.form[key])
+
+                # pagesのみ特別な処理
+                case '_pages':
+                    args[key] = split(request.form[key], sort=True, unique=True, decriment=True)
+                case _:
+                    return jsonify({'error': f'Invalid parameter type {value}'}), 400
+
+        # リクエストにファイルが含まれているかチェック
+        if 'files[]' not in request.files:
+            return jsonify({'error': 'No files part in the request'}), 400
+
+        # ファイルをリストで取得
+        files = request.files.getlist('files[]')
+        if not files:
+            return jsonify({'error': 'No files provided'}), 400
+
+        # 一時フォルダをリクエストごとに作成
+        request_temp_dir = Const.temp_dir / f'request_{uuid.uuid4().hex}'
+        request_temp_dir.mkdir()
+
+        # ファイルを保存
+        saved_files = []
+        for file in files:
+            if file and endpoint.is_allowed(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = request_temp_dir / filename
+                file.save(file_path)
+                saved_files.append(file_path)
+            else:
+                return jsonify({'error': f'File {file.filename} is not allowed'}), 400
+
+        # 処理を実行
+        processed_files = endpoint(saved_files, **args)
+
+        return send_file(processed_files, as_attachment=True)
+
+    except Exception as e:
+        # エラーが発生した場合はログを出力
+        app.logger.error(e, exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+    finally:
+        # 処理が終了したら一時ファイルを削除
+        if request_temp_dir.exists():
+            shutil.rmtree(request_temp_dir, ignore_errors=True)
+
 # エンドポイントの登録
 def register_endpoint(app: Flask, endpoint: Endpoint):
     def dynamic_endpoint():
