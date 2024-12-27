@@ -48,14 +48,59 @@ endpoints = [
     Endpoint('/convert_docx', 'Convert PDF to Word', process=editors.pdf_to_docx,  multiple=False, allowed_extensions=('pdf', )),
 ]
 
+
 # APIドキュメントのエンドポイント
 @app.route('/', methods=['GET'])
 def index_endpoint():
     return render_template('api_docs.html', endpoints=endpoints, api_name=Const.api_name)
 
-@app.route('/split-test', methods=['POST'])
-def split_test():
-    endpoint = endpoints[0]
+for endpoint in endpoints:
+    @app.route(endpoint.url, methods=['POST'])
+    def dynamic_endpoint():
+        return edit_endpoint(endpoint)
+
+# @app.route('/split', methods=['POST'])
+# def split_endpoint():
+#     return edit_endpoint(endpoints[0])
+
+# @app.route('/marge', methods=['POST'])
+# def marge_endpoint():
+#     return edit_endpoint(endpoints[1])
+
+# @app.route('/delete', methods=['POST'])
+# def delete_endpoint():
+#     return edit_endpoint(endpoints[2])
+
+# @app.route('/extract', methods=['POST'])
+# def extract_endpoint():
+#     return edit_endpoint(endpoints[3])
+
+# @app.route('/rotate', methods=['POST'])
+# def rotate_endpoint():
+#     return edit_endpoint(endpoints[4])
+
+# @app.route('/extract_text', methods=['POST'])
+# def extract_text_endpoint():
+#     return edit_endpoint(endpoints[5])
+
+# @app.route('/extract_image', methods=['POST'])
+# def extract_image_endpoint():
+#     return edit_endpoint(endpoints[6])
+
+# @app.route('/extract_table', methods=['POST'])
+# def extract_table_endpoint():
+#     return edit_endpoint(endpoints[7])
+
+# @app.route('/convert_image', methods=['POST'])
+# def convert_image_endpoint():
+#     return edit_endpoint(endpoints[8])
+
+# @app.route('/convert_docx', methods=['POST'])
+# def convert_docx_endpoint():
+#     return edit_endpoint(endpoints[9])
+
+# エンドポイントの処理
+def edit_endpoint(endpoint: Endpoint):
     try:
         args = {}
         for key, value in endpoint.params.items():
@@ -115,75 +160,75 @@ def split_test():
         if request_temp_dir.exists():
             shutil.rmtree(request_temp_dir, ignore_errors=True)
 
-# エンドポイントの登録
-def register_endpoint(app: Flask, endpoint: Endpoint):
-    def dynamic_endpoint():
-        try:
-            args = {}
-            for key, value in endpoint.params.items():
-                if key not in request.form:
-                    return jsonify({'error': f'Parameter {key} is missing'}), 400
+# # エンドポイントの登録
+# def register_endpoint(app: Flask, endpoint: Endpoint):
+#     def dynamic_endpoint():
+#         try:
+#             args = {}
+#             for key, value in endpoint.params.items():
+#                 if key not in request.form:
+#                     return jsonify({'error': f'Parameter {key} is missing'}), 400
 
-                match value:
-                    case 'str':
-                        args[key] = request.form[key]
-                    case 'int':
-                        args[key] = int(request.form[key])
-                    case 'float':
-                        args[key] = float(request.form[key])
+#                 match value:
+#                     case 'str':
+#                         args[key] = request.form[key]
+#                     case 'int':
+#                         args[key] = int(request.form[key])
+#                     case 'float':
+#                         args[key] = float(request.form[key])
 
-                    # pagesのみ特別な処理
-                    case '_pages':
-                        args[key] = split(request.form[key], sort=True, unique=True, decriment=True)
-                    case _:
-                        return jsonify({'error': f'Invalid parameter type {value}'}), 400
+#                     # pagesのみ特別な処理
+#                     case '_pages':
+#                         args[key] = split(request.form[key], sort=True, unique=True, decriment=True)
+#                     case _:
+#                         return jsonify({'error': f'Invalid parameter type {value}'}), 400
 
-            # リクエストにファイルが含まれているかチェック
-            if 'files[]' not in request.files:
-                return jsonify({'error': 'No files part in the request'}), 400
+#             # リクエストにファイルが含まれているかチェック
+#             if 'files[]' not in request.files:
+#                 return jsonify({'error': 'No files part in the request'}), 400
 
-            # ファイルをリストで取得
-            files = request.files.getlist('files[]')
-            if not files:
-                return jsonify({'error': 'No files provided'}), 400
+#             # ファイルをリストで取得
+#             files = request.files.getlist('files[]')
+#             if not files:
+#                 return jsonify({'error': 'No files provided'}), 400
 
-            # 一時フォルダをリクエストごとに作成
-            request_temp_dir = Const.temp_dir / f'request_{uuid.uuid4().hex}'
-            request_temp_dir.mkdir()
+#             # 一時フォルダをリクエストごとに作成
+#             request_temp_dir = Const.temp_dir / f'request_{uuid.uuid4().hex}'
+#             request_temp_dir.mkdir()
 
-            # ファイルを保存
-            saved_files = []
-            for file in files:
-                if file and endpoint.is_allowed(file.filename):
-                    filename = secure_filename(file.filename)
-                    file_path = request_temp_dir / filename
-                    file.save(file_path)
-                    saved_files.append(file_path)
-                else:
-                    return jsonify({'error': f'File {file.filename} is not allowed'}), 400
+#             # ファイルを保存
+#             saved_files = []
+#             for file in files:
+#                 if file and endpoint.is_allowed(file.filename):
+#                     filename = secure_filename(file.filename)
+#                     file_path = request_temp_dir / filename
+#                     file.save(file_path)
+#                     saved_files.append(file_path)
+#                 else:
+#                     return jsonify({'error': f'File {file.filename} is not allowed'}), 400
 
-            # 処理を実行
-            processed_files = endpoint(saved_files, **args)
+#             # 処理を実行
+#             processed_files = endpoint(saved_files, **args)
 
-            return send_file(processed_files, as_attachment=True)
+#             return send_file(processed_files, as_attachment=True)
 
-        except Exception as e:
-            # エラーが発生した場合はログを出力
-            app.logger.error(e, exc_info=True)
-            return jsonify({'error': str(e)}), 500
+#         except Exception as e:
+#             # エラーが発生した場合はログを出力
+#             app.logger.error(e, exc_info=True)
+#             return jsonify({'error': str(e)}), 500
 
-        finally:
-            # 処理が終了したら一時ファイルを削除
-            if request_temp_dir.exists():
-                shutil.rmtree(request_temp_dir, ignore_errors=True)
+#         finally:
+#             # 処理が終了したら一時ファイルを削除
+#             if request_temp_dir.exists():
+#                 shutil.rmtree(request_temp_dir, ignore_errors=True)
 
-    # エンドポイントの名前を動的に設定
-    dynamic_endpoint.__name__ = f'{endpoint.url.lstrip("/").replace("/", "_")}_endpoint'
-    app.add_url_rule(endpoint.url, view_func=dynamic_endpoint, methods=['POST'])
+#     # エンドポイントの名前を動的に設定
+#     dynamic_endpoint.__name__ = f'{endpoint.url.lstrip("/").replace("/", "_")}_endpoint'
+#     app.add_url_rule(endpoint.url, view_func=dynamic_endpoint, methods=['POST'])
 
 
 if __name__ == '__main__':
-    for endpoint in endpoints:
-        register_endpoint(app, endpoint)
+    # for endpoint in endpoints:
+    #     register_endpoint(app, endpoint)
 
     app.run(debug=True, port=5000)
