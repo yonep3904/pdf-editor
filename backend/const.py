@@ -20,7 +20,7 @@ class Const:
     log_dir: Path = root / 'log'
 
     # ログレベル
-    log_level = 'INFO'
+    log_level = 'DEBUG'
     # ログフォーマット
     log_format = "%(asctime)s - %(levelname)s - %(message)s"
 
