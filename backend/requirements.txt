@@ -1,4 +1,4 @@
-gunicorn​
+gunicorn
 PyMuPDF
 Pillow
 pandas
