@@ -17,6 +17,10 @@ CORS(app)
 # 受け取り可能なファイルサイズを16MBに設定
 # app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
+# ディレクトリの作成
+Const.temp_dir.mkdir(exist_ok=True)
+Const.log_dir.mkdir(exist_ok=True)
+
 # ログハンドラの設定
 handler = RotatingFileHandler(Const.log_dir / 'app.log', maxBytes=10 * 1024 * 1024, backupCount=5)
 handler.setLevel(Const.log_level)
@@ -29,10 +33,6 @@ app.logger.setLevel(Const.log_level)
 # ルートロガーにもハンドラを追加
 logging.getLogger().addHandler(handler)
 logging.getLogger().setLevel(Const.log_level)
-
-# ディレクトリの作成
-Const.temp_dir.mkdir(exist_ok=True)
-Const.log_dir.mkdir(exist_ok=True)
 
 # エンドポイントの定義
 endpoints = [
