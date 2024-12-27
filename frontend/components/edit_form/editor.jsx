@@ -2,7 +2,7 @@ import React, { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import constant from "@/app/const";
+import constant from "../../app/const";
 import createSchema from "./schema";
 import { FileInput } from "./dropzone";
 import { PagesInput } from "./textbox";
@@ -12,6 +12,7 @@ import style from "./style.module.css";
 const Editor = forwardRef(
   ({ title, description, fileUpload, params, apiEndpoint }, ref) => {
     const [files, setFiles] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const fields = params.map(([param]) => param);
     if (fileUpload) fields.push("files");
@@ -28,6 +29,10 @@ const Editor = forwardRef(
     });
 
     const onSubmit = async (data) => {
+      // 送信処理中の場合、新たな処理を行わない
+      if (isSubmitting) return;
+
+      setIsSubmitting(true);
       const formData = new FormData();
       // ファイルを追加
       files.forEach((file) => {
@@ -64,6 +69,8 @@ const Editor = forwardRef(
       } catch (error) {
         console.error("API request failed:", error);
         alert("送信中にエラーが発生しました。もう一度お試しください。");
+      } finally {
+        setIsSubmitting(false);
       }
     };
 
@@ -111,8 +118,12 @@ const Editor = forwardRef(
                 return null;
             }
           })}
-          <button type="submit" className={style.submitButton}>
-            実行
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={style.submitButton}
+          >
+            {isSubmitting ? "処理中..." : "送信"}
           </button>
         </div>
       </form>

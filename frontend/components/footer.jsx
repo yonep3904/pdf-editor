@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./footer.module.css";
-import constant from "@/app/const";
+import constant from "../app/const";
 import Link from "next/link";
 import Image from "next/image";
 

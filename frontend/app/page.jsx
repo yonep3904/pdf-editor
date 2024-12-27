@@ -2,25 +2,25 @@
 
 import React, { useRef } from "react";
 
-import Header from "@/components/header";
-import Sidebar from "@/components/sidebar";
-import EditorContainer from "@/components/edit_form/editor_container";
-import editorList from "@/app/editor_list";
-import Footer from "@/components/footer";
+import Header from "../components/header";
+import Sidebar from "../components/sidebar";
+import EditorContainer from "../components/edit_form/editor_container";
+import editorList from "../app/editor_list";
+import Footer from "../components/footer";
 
 const navList = [
-  {
-    href: "/login",
-    label: "ログイン",
-  },
-  {
-    href: "/user",
-    label: "ホーム",
-  },
-  {
-    href: "/user",
-    label: "編集",
-  },
+  // {
+  //   href: "/login",
+  //   label: "ログイン",
+  // },
+  // {
+  //   href: "/user",
+  //   label: "ホーム",
+  // },
+  // {
+  //   href: "/user",
+  //   label: "編集",
+  // },
 ];
 
 function MainPage() {
