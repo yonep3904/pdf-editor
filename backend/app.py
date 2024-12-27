@@ -54,11 +54,6 @@ endpoints = [
 def index_endpoint():
     return render_template('api_docs.html', endpoints=endpoints, api_name=Const.api_name)
 
-for endpoint in endpoints:
-    @app.route(endpoint.url, methods=['POST'])
-    def dynamic_endpoint():
-        return edit_endpoint(endpoint)
-
 # @app.route('/split', methods=['POST'])
 # def split_endpoint():
 #     return edit_endpoint(endpoints[0])
@@ -159,6 +154,11 @@ def edit_endpoint(endpoint: Endpoint):
         # 処理が終了したら一時ファイルを削除
         if request_temp_dir.exists():
             shutil.rmtree(request_temp_dir, ignore_errors=True)
+
+for endpoint in endpoints:
+    @app.route(endpoint.url, methods=['POST'])
+    def dynamic_endpoint():
+        return edit_endpoint(endpoint)
 
 # # エンドポイントの登録
 # def register_endpoint(app: Flask, endpoint: Endpoint):
