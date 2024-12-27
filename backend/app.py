@@ -117,7 +117,7 @@ def register_endpoint(app: Flask, endpoint: Endpoint):
 
     # エンドポイントの名前を動的に設定
     dynamic_endpoint.__name__ = f'{endpoint.url.lstrip("/").replace("/", "_")}_endpoint'
-    app.add_url_rule('/api' + endpoint.url, view_func=dynamic_endpoint, methods=['POST'])
+    app.add_url_rule(endpoint.url, view_func=dynamic_endpoint, methods=['POST'])
 
 
 if __name__ == '__main__':
