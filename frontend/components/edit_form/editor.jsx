@@ -62,7 +62,8 @@ const Editor = forwardRef(
         a.click();
         window.URL.revokeObjectURL(url);
       } catch (error) {
-        console.error("Error:", error);
+        console.error("API request failed:", error);
+        alert("送信中にエラーが発生しました。もう一度お試しください。");
       }
     };
 
