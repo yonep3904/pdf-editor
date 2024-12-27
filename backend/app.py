@@ -48,52 +48,6 @@ endpoints = [
     Endpoint('/convert_docx', 'Convert PDF to Word', process=editors.pdf_to_docx,  multiple=False, allowed_extensions=('pdf', )),
 ]
 
-
-# APIドキュメントのエンドポイント
-@app.route('/', methods=['GET'])
-def index_endpoint():
-    return render_template('api_docs.html', endpoints=endpoints, api_name=Const.api_name)
-
-# @app.route('/split', methods=['POST'])
-# def split_endpoint():
-#     return edit_endpoint(endpoints[0])
-
-# @app.route('/marge', methods=['POST'])
-# def marge_endpoint():
-#     return edit_endpoint(endpoints[1])
-
-# @app.route('/delete', methods=['POST'])
-# def delete_endpoint():
-#     return edit_endpoint(endpoints[2])
-
-# @app.route('/extract', methods=['POST'])
-# def extract_endpoint():
-#     return edit_endpoint(endpoints[3])
-
-# @app.route('/rotate', methods=['POST'])
-# def rotate_endpoint():
-#     return edit_endpoint(endpoints[4])
-
-# @app.route('/extract_text', methods=['POST'])
-# def extract_text_endpoint():
-#     return edit_endpoint(endpoints[5])
-
-# @app.route('/extract_image', methods=['POST'])
-# def extract_image_endpoint():
-#     return edit_endpoint(endpoints[6])
-
-# @app.route('/extract_table', methods=['POST'])
-# def extract_table_endpoint():
-#     return edit_endpoint(endpoints[7])
-
-# @app.route('/convert_image', methods=['POST'])
-# def convert_image_endpoint():
-#     return edit_endpoint(endpoints[8])
-
-# @app.route('/convert_docx', methods=['POST'])
-# def convert_docx_endpoint():
-#     return edit_endpoint(endpoints[9])
-
 # エンドポイントの処理
 def edit_endpoint(endpoint: Endpoint):
     try:
@@ -155,10 +109,52 @@ def edit_endpoint(endpoint: Endpoint):
         if request_temp_dir.exists():
             shutil.rmtree(request_temp_dir, ignore_errors=True)
 
-for endpoint in endpoints:
-    @app.route(endpoint.url, methods=['POST'])
-    def dynamic_endpoint():
-        return edit_endpoint(endpoint)
+# APIドキュメントのエンドポイント
+@app.route('/', methods=['GET'])
+def index_endpoint():
+    return render_template('api_docs.html', endpoints=endpoints, api_name=Const.api_name)
+
+@app.route('/split', methods=['POST'])
+def split_endpoint():
+    return edit_endpoint(endpoints[0])
+
+@app.route('/marge', methods=['POST'])
+def marge_endpoint():
+    return edit_endpoint(endpoints[1])
+
+@app.route('/delete', methods=['POST'])
+def delete_endpoint():
+    return edit_endpoint(endpoints[2])
+
+@app.route('/extract', methods=['POST'])
+def extract_endpoint():
+    return edit_endpoint(endpoints[3])
+
+@app.route('/rotate', methods=['POST'])
+def rotate_endpoint():
+    return edit_endpoint(endpoints[4])
+
+@app.route('/extract_text', methods=['POST'])
+def extract_text_endpoint():
+    return edit_endpoint(endpoints[5])
+
+@app.route('/extract_image', methods=['POST'])
+def extract_image_endpoint():
+    return edit_endpoint(endpoints[6])
+
+@app.route('/extract_table', methods=['POST'])
+def extract_table_endpoint():
+    return edit_endpoint(endpoints[7])
+
+@app.route('/convert_image', methods=['POST'])
+def convert_image_endpoint():
+    return edit_endpoint(endpoints[8])
+
+@app.route('/convert_docx', methods=['POST'])
+def convert_docx_endpoint():
+    return edit_endpoint(endpoints[9])
+
+
 
 # # エンドポイントの登録
 # def register_endpoint(app: Flask, endpoint: Endpoint):
