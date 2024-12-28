@@ -123,7 +123,7 @@ const Editor = forwardRef(
             disabled={isSubmitting}
             className={style.submitButton}
           >
-            {isSubmitting ? "処理中..." : "送信"}
+            {isSubmitting ? "処理中..." : "編集"}
           </button>
         </div>
       </form>
