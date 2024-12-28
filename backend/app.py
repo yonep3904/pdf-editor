@@ -156,8 +156,8 @@ def convert_image_endpoint():
 def convert_docx_endpoint():
     return edit_endpoint(endpoints[9])
 
-@app.route('/markitdown', methods=['POST'])
-def markitdown():
+@app.route('/markdown', methods=['POST'])
+def markdown():
     return edit_endpoint(endpoints[10])
 
 if __name__ == '__main__':
