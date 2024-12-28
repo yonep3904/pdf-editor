@@ -14,7 +14,7 @@ const geistMono = localFont({
 
 export const metadata = {
   title: "PDF Editor",
-  description: "PDFファイルを編集するためのツールです",
+  description: "PDFファイルを編集するためのツール",
 };
 
 export default function RootLayout({ children }) {
