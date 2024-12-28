@@ -25,7 +25,7 @@
    git clone https://github.com/yonep3904/pdf-editor
    cd ./pdf-editor
    ```
-1. `/frontend`に移動しアプリケーションを起動します。
+1. `/frontend`に移動しアプリケーションを起動します:
    ```bash
    cd ./frontend
    npm run dev
@@ -33,16 +33,16 @@
 
 ### API サーバーをローカル環境で実行する場合
 
-1. `/backend`に移動し必要な依存関係をインストールします。
+1. `/backend`に移動し必要な依存関係をインストールします:
    ```bash
    cd ./backend
    pip install -r requirements.txt
    ```
-1. `/backend/app.py`を実行して API サーバーを起動します。
+1. `/backend/app.py`を実行して API サーバーを起動します:
    ```bash
    python app.py
    ```
-1. `/frontend/next.config.mjs`内の`API_BASE_URL`をローカルホスト`http://localhost:5000`に変更します。
+1. `/frontend/next.config.mjs`内の`API_BASE_URL`をローカルホスト`http://localhost:5000`に変更します:
    ```JavaScript
    const nextConfig = {
      env: {
@@ -55,9 +55,10 @@
 ## 機能一覧
 
 - PDF の分割と結合
-- ページ内容の抽出
-- PDF から Word 形式への変換
-- 他の形式へのエクスポート
+- PDF ページの抽出と削除・回転
+- ページ内容(テキスト/画像/表データ)の抽出
+- PDF から他形式(画像, Word)への変換
+- ドキュメントファイル等(.pdf, .pptx, .xlsx, .docx, .csv, .json, .xml, .html)からテキストデータ(.md)への変換
 
 ## 貢献方法
 
