@@ -1,40 +1,62 @@
+Copyright (c) 2024 yonep-nuts. All rights reserved.
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+---
+
+### **Third-Party Libraries**
+
 This project uses the following third-party libraries:
 
-1. **PyMuPDF**
+1. **gunicorn** - Python WSGI HTTP Server
 
-   - License: MIT License
-   - Copyright (c) 2019-2024 MuPDF, Inc.
+   - Copyright (c) 2016-2024 Gunicorn Contributors
+   - Licensed under the **MIT License**.
 
-2. **Pillow**
+2. **PyMuPDF** - PDF manipulation library
 
-   - License: PIL Software License (Python Imaging Library)
-   - Copyright (c) 2010-2024 Python Imaging Library Contributors
+   - Copyright (c) 2020-2024 PyMuPDF Contributors
+   - Licensed under the **GNU AGPL v3.0**.
 
-3. **pandas**
+3. **Pillow** - Python Imaging Library (PIL Fork)
 
-   - License: BSD 3-Clause License
+   - Copyright (c) 2010-2024 Contributors to Pillow
+   - Licensed under the **MIT-CMU License**.
+
+4. **pandas** - Data analysis library
+
    - Copyright (c) 2008-2024 The pandas development team
+   - Licensed under the **BSD 3-Clause License**.
 
-4. **pdf2docx**
+5. **pdf2docx** - PDF to Word conversion library
 
-   - License: MIT License
-   - Copyright (c) 2020-2024 pdf2docx contributors
+   - Copyright (c) 2020 Contributors to pdf2docx
+   - Licensed under the **MIT License**.
 
-5. **Flask**
+6. **Flask** - Web framework for Python
 
-   - License: BSD 3-Clause License
-   - Copyright (c) 2010-2024 The Flask Authors
+   - Copyright (c) 2010-2024 The Pallets Contributors
+   - Licensed under the **BSD 3-Clause License**.
 
-6. **Flask-Cors**
+7. **Flask-Cors** - Cross-Origin Resource Sharing (CORS) support for Flask
 
-   - License: MIT License
-   - Copyright (c) 2018-2024 Flask-Cors contributors
+   - Copyright (c) 2014-2024 The Pallets Contributors
+   - Licensed under the **MIT License**.
 
-7. **Werkzeug**
+8. **Werkzeug** - WSGI utility library
 
-   - License: BSD 3-Clause License
-   - Copyright (c) 2007-2024 The Werkzeug Authors
+   - Copyright (c) 2010-2024 The Pallets Contributors
+   - Licensed under the **BSD 3-Clause License**.
 
-8. **Next.js**
-   - License: MIT License
-   - Copyright (c) 2016-2024 Vercel, Inc.
+9. **markitdown** - Markdown generation tool
+
+   - Copyright (c) 2024 Contributors to markitdown
+   - Licensed under the **MIT License**.
+
+10. **Next.js** - React-based framework
+    - Copyright (c) 2020-2024 Vercel
+    - Licensed under the **MIT License**.
+
+---
+
+The above libraries are included in this project under their respective licenses. For details, please refer to the individual libraries' license files.
