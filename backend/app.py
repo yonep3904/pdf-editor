@@ -47,7 +47,7 @@ endpoints = [
     Endpoint('/convert_image', 'Convert PDF to Image', process=editors.pdf_to_image,  multiple=False, allowed_extensions=('pdf', )),
     Endpoint('/convert_docx', 'Convert PDF to Word', process=editors.pdf_to_docx,  multiple=False, allowed_extensions=('pdf', )),
     Endpoint('/markdown', 'Convert documentfile(.pdf, .pptx, .xlsx, .docx, .csv, .json, .xml, .html) to txt',
-             process=editors.markdown, multiple=False, allowed_extensions=('.pdf', '.pptx', '.xlsx', '.docx', '.csv', '.json', '.xml', '.html'))
+             process=editors.markdown, multiple=False, allowed_extensions=('pdf', 'pptx', 'xlsx', 'docx', 'csv', 'json', 'xml', 'html'))
 ]
 
 # エンドポイントの処理
