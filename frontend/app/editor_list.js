@@ -115,6 +115,34 @@ const editorList = [
       },
     ],
   },
+  {
+    title: "その他",
+    contents: [
+      {
+        title: "テキストに変換する",
+        description:
+          "様々なファイルをテキストに変換します(対応拡張子: .pdf, .pptx, .xlsx, .docx, .csv, .json, .xml, .html)。",
+        fileUpload: {
+          accept: {
+            "application/pdf": [".pdf"],
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+              [".pptx"],
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+              [".xlsx"],
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+              [".docx"],
+            "text/csv": [".csv"],
+            "application/json": [".json"],
+            "application/xml": [".xml"],
+            "text/html": [".html"],
+          },
+          multiple: false,
+        },
+        params: [],
+        apiEndpoint: "/markdown",
+      },
+    ],
+  },
 ];
 
 export default editorList;
