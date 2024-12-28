@@ -26,7 +26,7 @@ def zip_files(files: list[Path], zip: Path|None = None) -> Path:
     """ファイルをZIPにまとめる"""
     if zip is None:
         zip = files[0].with_name('output.zip')
-    
+
     with ZipFile(zip, 'w') as zipf:
         for file_path in files:
             zipf.write(file_path, file_path.name)

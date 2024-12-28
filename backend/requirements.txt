@@ -6,3 +6,4 @@ pdf2docx
 Flask
 Flask-Cors
 Werkzeug
+markitdown

@@ -10,6 +10,12 @@ from pandas import DataFrame
 # PDFからの変換
 from pdf2docx import Converter
 
+# markdown変換
+from markitdown import MarkItDown
+
+
+markitdown = MarkItDown()
+
 IMAGE_FORMAT = {
     'JPEG': '.jpeg',
     'PNG': '.png',
@@ -56,7 +62,7 @@ def split_page(file: Path) -> list[Path]:
         writer.insert_pdf(reader, from_page=i, to_page=i)
         writer.save(output_name)
         writer.close()
-    
+
     reader.close()
     return result
 
@@ -72,7 +78,7 @@ def marge_page(files: list[Path]) -> list[Path]:
     writer = fitz.open()
     for file in files:
         writer.insert_pdf(fitz.open(file))
-    
+
     output_name = rename(files[0], '_marged')
     writer.save(output_name)
 
@@ -94,7 +100,7 @@ def delete_page(file: Path, pages: list[int]) -> list[Path]:
     for i in range(reader.page_count):
         if i not in pages:
             writer.insert_pdf(reader, from_page=i, to_page=i)
-    
+
     output_name = rename(file, '_deleted')
     writer.save(output_name)
 
@@ -117,7 +123,7 @@ def extract_page(file: Path, pages: list[int]) -> list[Path]:
     for i in range(reader.page_count):
         if i in pages:
             writer.insert_pdf(reader, from_page=i, to_page=i)
-    
+
     output_name = rename(file, '_extracted')
     writer.save(output_name)
 
@@ -127,7 +133,7 @@ def extract_page(file: Path, pages: list[int]) -> list[Path]:
 
 def rotate_page(file: Path, angle: int) -> list[Path]:
     """ページを回転する
-    
+
     Args:
         file (Path): ファイル名
         angle (int): 回転角度
@@ -140,7 +146,7 @@ def rotate_page(file: Path, angle: int) -> list[Path]:
     reader = fitz.open(file)
     for page in reader:
         page.set_rotation(normalize_angle)
-    
+
     output_name = rename(file, f'_rotated-{normalize_angle}')
     reader.save(output_name)
 
@@ -162,14 +168,14 @@ def extract_text(file: Path) -> list[Path]:
 
     for page in reader:
         text += page.get_text() or ''
-    
+
     output_name = rename(file, f'_e-text', extention='.txt')
     with open(output_name, 'w', encoding='utf-8') as f:
         f.write(text)
 
     reader.close()
     return [output_name]
-    
+
 def extract_image(file: Path) -> list[Path]:
     """PDFから画像を抽出する
 
@@ -190,7 +196,7 @@ def extract_image(file: Path) -> list[Path]:
             base_image = reader.extract_image(image[0])
             with open(output_name, 'wb') as f:
                 f.write(base_image['image'])
-    
+
     reader.close()
     return result
 
@@ -213,7 +219,7 @@ def extract_table(file: Path) -> list[Path]:
 
             df = DataFrame(table.extract())
             df.to_csv(output_name, index=False, header=False)
-    
+
     reader.close()
     return result
 
@@ -245,7 +251,7 @@ def pdf_to_docx(file: Path) -> list[Path]:
 
     Args:
         file (Path): ファイル名
-    
+
     Returns:
         list[Path]: 変換されたファイル名
     """
@@ -254,17 +260,26 @@ def pdf_to_docx(file: Path) -> list[Path]:
     converter.convert(output_name, start=0, end=None)
     return [output_name]
 
+def markdown(file: Path) -> list[Path]:
+    """ファイル(.pdf, .pptx, .xlsx, .docx, .csv, .json, .xml, .html)をmarkdownに変換する
+
+    Args:
+        file (Path): ファイル名
+
+    Returns:
+        list[Path]: 変換されたファイル名
+    """
+    result = markitdown.convert(file.__str__())
+    output_name = rename(file, '_markdown', extention='.txt')
+    with open(output_name, 'w', encoding='utf-8') as f:
+        f.write(result.text_content)
+    return [output_name]
 
 def main():
     dir = Path(__file__).parent
-    
-    test = dir / 'testpdf'
-    test_reg = dir / 'temp/request_c7e36cdc3389410e81900c5e7ba25a61/gan.pdf'
-    test_ja = test / '46_米村慶太_Jordan.pdf'
-    test_txt = test / '46_米村慶太_Jordan_e-text.txt'
-    test_img = test / 's59201-240509.pdf'
-    
-    x = split_page(test_reg)
+
+    test = dir / ''
+    x = markdown(test)
     print(x)
 
 if __name__ == '__main__':
