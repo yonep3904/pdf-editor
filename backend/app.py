@@ -1,6 +1,9 @@
 from flask import Flask, request, send_file, jsonify, render_template
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
+import re
+import unicodedata
+
 import uuid
 import shutil
 import logging
@@ -51,6 +54,17 @@ endpoints = [
              process=editors.markdown, multiple=False, allowed_extensions=('pdf', 'pptx', 'xlsx', 'docx', 'csv', 'json', 'xml', 'html'))
 ]
 
+# 非アスキーを許容するsecure_filename関数
+def secure_filename(filename):
+    # Unicode正規化（NFKC）で非ASCII文字を変換
+    filename = unicodedata.normalize("NFKC", filename)
+    # 特殊文字をアンダースコアに置換
+    filename = re.sub(r'[^\w\s.-]', '_', filename)
+    # 空白をアンダースコアに置換
+    filename = re.sub(r'\s+', '_', filename)
+    # ファイル名が空にならないようにする
+    return filename or "default_filename"
+
 # エンドポイントの処理
 def edit_endpoint(endpoint: Endpoint):
     try:
@@ -89,7 +103,6 @@ def edit_endpoint(endpoint: Endpoint):
         # ファイルを保存
         saved_files = []
         for file in files:
-            app.logger.info(f'File {file.filename} -> {file.filename.encode("utf-8").decode("utf-8")}')
             if file and endpoint.is_allowed(file.filename):
                 filename = secure_filename(file.filename)
                 file_path = request_temp_dir / filename
