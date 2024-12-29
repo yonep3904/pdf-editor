@@ -116,7 +116,7 @@ def edit_endpoint(endpoint: Endpoint):
 
         return send_file(processed_files, as_attachment=True)
 
-    except IndexError:
+    except editors.InvalidPageNumber as e:
         return jsonify({'error': 'Page index is not a valid'}), 400
 
     except FileDataError:

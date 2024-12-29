@@ -16,6 +16,9 @@ from markitdown import MarkItDown
 
 markitdown = MarkItDown()
 
+class InvalidPageNumber(ValueError):
+    pass
+
 IMAGE_FORMAT = {
     'JPEG': '.jpeg',
     'PNG': '.png',
@@ -97,6 +100,10 @@ def delete_page(file: Path, pages: list[int]) -> list[Path]:
     """
     reader = fitz.open(file)
     writer = fitz.open()
+
+    if any([not 0 <= i < reader.page_count for i in pages]):
+        raise InvalidPageNumber('invalid page number')
+
     for i in range(reader.page_count):
         if i not in pages:
             writer.insert_pdf(reader, from_page=i, to_page=i)
@@ -120,6 +127,10 @@ def extract_page(file: Path, pages: list[int]) -> list[Path]:
     """
     reader = fitz.open(file)
     writer = fitz.open()
+
+    if any([not 0 <= i < reader.page_count for i in pages]):
+        raise InvalidPageNumber('invalid page number')
+
     for i in range(reader.page_count):
         if i in pages:
             writer.insert_pdf(reader, from_page=i, to_page=i)
