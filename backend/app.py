@@ -10,6 +10,7 @@ from const import Const
 from endpoint import Endpoint
 from common import split
 import editors
+from fitz import FileDataError
 
 app = Flask(__name__)
 # CORSの設定
@@ -100,6 +101,12 @@ def edit_endpoint(endpoint: Endpoint):
         processed_files = endpoint(saved_files, **args)
 
         return send_file(processed_files, as_attachment=True)
+
+    except IndexError:
+        return jsonify({'error': 'Page index is not a valid'}), 400
+
+    except FileDataError:
+        return jsonify({'error': 'File is not a valid'}), 400
 
     except Exception as e:
         # エラーが発生した場合はログを出力

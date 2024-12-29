@@ -68,7 +68,11 @@ const Editor = forwardRef(
         window.URL.revokeObjectURL(url);
       } catch (error) {
         console.error("API request failed:", error);
-        alert("送信中にエラーが発生しました。もう一度お試しください。");
+        if (error.status === 400) {
+          alert("入力内容に誤りがあります。");
+        } else {
+          alert("送信中にエラーが発生しました。もう一度お試しください。");
+        }
       } finally {
         setIsSubmitting(false);
       }
