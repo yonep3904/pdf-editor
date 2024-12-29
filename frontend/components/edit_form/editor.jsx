@@ -8,6 +8,7 @@ import { FileInput } from "./dropzone";
 import { PagesInput } from "./textbox";
 import { AngleInput, FormatInput } from "./radiobutton";
 import style from "./style.module.css";
+import { response } from "express";
 
 const Editor = forwardRef(
   ({ title, description, fileUpload, params, apiEndpoint }, ref) => {
@@ -53,25 +54,26 @@ const Editor = forwardRef(
         });
 
         console.log("Response status:", response.status);
-        if (!response.ok) {
-          throw new Error("API request failed");
-        }
-
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = "output.zip";
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("API request failed:", error);
-        if (error.status === 400) {
-          alert("入力内容に誤りがあります。");
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = "output.zip";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
         } else {
-          alert("送信中にエラーが発生しました。もう一度お試しください。");
+          console.error("API request failed:", response.status);
+          switch (response.status) {
+            case 400:
+              alert("入力内容に誤りがあります。");
+              break;
+            default:
+              alert("送信中にエラーが発生しました。もう一度お試しください。");
+              break;
+          }
         }
       } finally {
         setIsSubmitting(false);
