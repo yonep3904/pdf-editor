@@ -89,7 +89,7 @@ def edit_endpoint(endpoint: Endpoint):
         # ファイルを保存
         saved_files = []
         for file in files:
-            app.logger.info(f'File {file.filename} -> {file.filename.encode("latin1").decode("utf-8")}')
+            app.logger.info(f'File {file.filename} -> {file.filename.encode("utf-8").decode("utf-8")}')
             if file and endpoint.is_allowed(file.filename):
                 filename = secure_filename(file.filename)
                 file_path = request_temp_dir / filename
