@@ -8,7 +8,6 @@ import { FileInput } from "./dropzone";
 import { PagesInput } from "./textbox";
 import { AngleInput, FormatInput } from "./radiobutton";
 import style from "./style.module.css";
-import { response } from "express";
 
 const Editor = forwardRef(
   ({ title, description, fileUpload, params, apiEndpoint }, ref) => {
