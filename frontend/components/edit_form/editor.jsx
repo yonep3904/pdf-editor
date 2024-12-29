@@ -75,6 +75,8 @@ const Editor = forwardRef(
               break;
           }
         }
+      } catch (error) {
+        alert("送信中にエラーが発生しました。もう一度お試しください。");
       } finally {
         setIsSubmitting(false);
       }
