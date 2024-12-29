@@ -120,8 +120,7 @@ const editorList = [
     contents: [
       {
         title: "テキストに変換する",
-        description:
-          "様々なファイルをテキストに変換します(対応拡張子: .pdf, .pptx, .xlsx, .docx, .csv, .json, .xml, .html)。",
+        description: "様々なファイルをテキストに変換します。",
         fileUpload: {
           accept: {
             "application/pdf": [".pdf"],

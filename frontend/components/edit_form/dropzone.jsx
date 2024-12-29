@@ -49,8 +49,13 @@ export const FileInput = ({
         <input {...getInputProps()} />
         <p>
           {isDragActive
-            ? "ここにファイルをドロップしてください"
-            : "ファイルをドラッグ＆ドロップするか、クリックして選択してください"}
+            ? "ここにファイルをドロップしてください。"
+            : `ファイルをドラッグ＆ドロップするか、クリックして選択してください。
+              (対応拡張子 : ${Object.values(fileUpload.accept)
+                .map((value) => value.join(", "))
+                .join(", ")} , 最大ファイル数 :  ${
+                fileUpload.multiple ? constant.fileUpload.maxFileNum : 1
+              })`}
         </p>
       </div>
       <div className={style.fileList}>
