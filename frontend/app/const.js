@@ -5,6 +5,10 @@ const constant = {
       return `${this.baseUrl}${endpoint}`;
     },
   },
+  fileUpload: {
+    maxFileNum: 10,
+    maxFileSize: 5 * 1024 * 1024,
+  },
   github: {
     name: "yonep3904",
     repository: "pdf-editor",

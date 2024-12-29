@@ -1,6 +1,7 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import style from "./style.module.css";
+import constant from "../../app/const";
 
 export const FileInput = ({
   fileUpload,
@@ -10,10 +11,18 @@ export const FileInput = ({
   errors,
 }) => {
   const onDrop = (acceptedFiles) => {
-    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
-    setValue("files", [...files, ...acceptedFiles], {
-      shouldValidate: true,
-    });
+    const maxFile = fileUpload.multiple ? constant.fileUpload.maxFileNum : 1;
+    if (maxFile <= files.length) {
+      setFiles((prevFiles) => [...prevFiles.slice(1), ...acceptedFiles]);
+      setValue("files", [...files.slice(1), ...acceptedFiles], {
+        shouldValidate: true,
+      });
+    } else {
+      setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+      setValue("files", [...files, ...acceptedFiles], {
+        shouldValidate: true,
+      });
+    }
   };
 
   const removeFile = (file) => {
@@ -28,7 +37,7 @@ export const FileInput = ({
     onDrop,
     accept: fileUpload.accept,
     multiple: fileUpload.multiple,
-    maxFiles: 10,
+    maxFiles: fileUpload.multiple ? constant.fileUpload.maxFileNum : 1,
   });
 
   return (
