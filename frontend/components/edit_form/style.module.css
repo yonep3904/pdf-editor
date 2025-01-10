@@ -34,6 +34,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  gap: 20px 20px;
 }
 
 /* ドロップゾーン */
@@ -59,7 +60,6 @@
 
 @media (max-width: 768px) {
   .dropzone {
-    width: 100%;
     padding: 10px;
   }
 }
@@ -92,7 +92,7 @@
   padding: 1px;
   margin-bottom: 10px;
   border: none;
-  flex-direction: row; /* 縦に並べる */
+  flex-direction: row;
 }
 
 .fileItem span {
@@ -112,18 +112,13 @@
 /* テキストボックス */
 .inputContainer {
   justify-content: start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px 20px;
+  flex-wrap: wrap;
   width: auto;
-}
-
-@media (max-width: 768px) {
-  .inputContainer {
-    justify-content: start;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
+  min-width: 300px;
 }
 
 .inputContainer input {
@@ -144,17 +139,17 @@
 /* ラジオボタン */
 .radioContainer {
   width: auto;
-  gap: 20px;
+  min-width: 300px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 @media (max-width: 768px) {
   .radioContainer {
-    width: 100%;
-    gap: 2px;
     flex-direction: column;
+    gap: 2px;
   }
 }
 .radioGroup {
@@ -198,6 +193,6 @@
 /* エラー表示 */
 .error {
   font-size: 0.875rem;
-  color: #d9534f;
+  color: red;
   margin-top: 4px;
 }
