@@ -8,7 +8,7 @@ import Image from "next/image";
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <p>&copy; 2024 yonep3904 </p>
+      <p>&copy; 2025 yonep3904 </p>
       <Link href={constant.github.link}>
         <Image
           src="/github-mark.svg"
