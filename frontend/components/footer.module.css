@@ -32,7 +32,8 @@
 
 /* GitHubロゴにホバー時のエフェクト */
 .logo:hover {
-  transform: scale(1.05); /* 少し拡大するエフェクト */
+  transform: scale(1.05) rotate(360deg);
+  transition: transform 0.5s ease;
 }
 
 /* GitHubリンクのテキスト */
